@@ -28,7 +28,7 @@ struct StartingPageView: View {
 
                 Spacer()
 
-                NavigationLink(destination: AccountSettingsView(), isActive: $navigateToAccountSettings) {
+                NavigationLink(destination: AccountView(), isActive: $navigateToAccountSettings) {
                     Button(action: {
                         navigateToAccountSettings = true
                     }) {

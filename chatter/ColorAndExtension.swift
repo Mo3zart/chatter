@@ -12,21 +12,26 @@ extension Color {
     static let midPurple = Color(hex: "#270082")
     static let brightPurple = Color(hex: "#7A0BC0")
     static let pink = Color(hex: "#FA58B6")
+    static let grayMatching = Color(hex: "#3E3E3E") // Adjust to the desired gray tone
+}
 
+extension Color {
     init(hex: String) {
-        let scanner = Scanner(string: hex)
-        if hex.hasPrefix("#") {
-            scanner.currentIndex = hex.index(after: hex.startIndex)
+        var hexValue = hex
+        if hexValue.hasPrefix("#") {
+            hexValue = String(hexValue.dropFirst())
         }
-        var rgbValue: UInt64 = 0
-        scanner.scanHexInt64(&rgbValue)
 
-        let r = Double((rgbValue >> 16) & 0xff) / 255
-        let g = Double((rgbValue >> 8) & 0xff) / 255
-        let b = Double(rgbValue & 0xff) / 255
+        let scanner = Scanner(string: hexValue)
+        var rgb: UInt64 = 0
+
+        scanner.currentIndex = hexValue.startIndex
+        scanner.scanHexInt64(&rgb)
+
+        let r = Double((rgb >> 16) & 0xFF) / 255.0
+        let g = Double((rgb >> 8) & 0xFF) / 255.0
+        let b = Double(rgb & 0xFF) / 255.0
 
         self.init(red: r, green: g, blue: b)
     }
 }
-
-

@@ -14,6 +14,8 @@ struct ContentView: View {
             //LanguageSelectionView()
             StartingPageView()
             //LoginPageView()
+            //AccountView()
+            //SettingsView()
         }
     }
 }
