@@ -9,7 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        LoginPageView()
+        NavigationStack {
+            //StartScreenView()
+            //LanguageSelectionView()
+            StartingPageView()
+            //LoginPageView()
+        }
     }
 }
 
@@ -18,3 +23,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
