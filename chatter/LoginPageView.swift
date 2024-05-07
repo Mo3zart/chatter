@@ -16,74 +16,89 @@ struct LoginPageView: View {
     @State private var showPassword = false
     @State private var showConfirmPassword = false
     @State private var validationError: String?
+    @State private var navigateToStartingPage = false
+    @State private var navigateToLanguageSelection = false
 
     var body: some View {
-        ZStack {
-            // Background
-            LinearGradient(gradient: Gradient(colors: [.darkPurple, .midPurple]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
+        NavigationStack {
+            ZStack {
+                // Background
+                LinearGradient(gradient: Gradient(colors: [.darkPurple, .midPurple]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
 
-            VStack(spacing: 16) {
-                Text(isLoginMode ? "Login" : "Register")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.pink)
-
-                Picker(selection: $isLoginMode, label: Text("")) {
-                    Text("Login")
-                        .tag(true)
-                    Text("Register")
-                        .tag(false)
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-
-                Group {
-                    if !isLoginMode {
-                        CustomTextField(placeholder: "Username", text: $username)
-                    }
-                    CustomTextField(placeholder: "Email", text: $email)
-
-                    CustomSecureField(placeholder: "Password", text: $password, showPassword: $showPassword)
-
-                    if !isLoginMode {
-                        CustomSecureField(placeholder: "Confirm Password", text: $confirmPassword, showPassword: $showConfirmPassword)
-                    }
-                }
-
-                if let error = validationError {
-                    Text(error)
-                        .foregroundColor(.red)
-                        .font(.footnote)
-                }
-
-                Button(action: {
-                    if validateForm() {
-                        // Handle login/register action here
-                    }
-                }) {
+                VStack(spacing: 16) {
                     Text(isLoginMode ? "Login" : "Register")
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.brightPurple)
-                        .cornerRadius(10)
-                }
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.pink)
 
-                DividerView(text: "or")
-
-                VStack(spacing: 10) {
-                    Text(isLoginMode ? "Login with" : "Sign up with")
-                        .foregroundColor(.white)
-
-                    HStack(spacing: 20) {
-                        SignInWithAppleButton()
-                        SignInWithGoogleButton()
+                    Picker(selection: $isLoginMode, label: Text("")) {
+                        Text("Login")
+                            .tag(true)
+                        Text("Register")
+                            .tag(false)
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+
+                    Group {
+                        if !isLoginMode {
+                            CustomTextField(placeholder: "Username", text: $username)
+                        }
+                        CustomTextField(placeholder: "Email", text: $email)
+
+                        CustomSecureField(placeholder: "Password", text: $password, showPassword: $showPassword)
+
+                        if !isLoginMode {
+                            CustomSecureField(placeholder: "Confirm Password", text: $confirmPassword, showPassword: $showConfirmPassword)
+                        }
+                    }
+
+                    if let error = validationError {
+                        Text(error)
+                            .foregroundColor(.red)
+                            .font(.footnote)
+                    }
+
+                    Button(action: {
+                        if validateForm() {
+                            if isLoginMode {
+                                navigateToStartingPage = true
+                            } else {
+                                navigateToLanguageSelection = true
+                            }
+                        }
+                    }) {
+                        Text(isLoginMode ? "Login" : "Register")
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.brightPurple)
+                            .cornerRadius(10)
+                    }
+
+                    DividerView(text: "or")
+
+                    VStack(spacing: 10) {
+                        Text(isLoginMode ? "Login with" : "Sign up with")
+                            .foregroundColor(.white)
+
+                        HStack(spacing: 20) {
+                            SignInWithAppleButton()
+                            SignInWithGoogleButton()
+                        }
+                    }
+
+                    Spacer()
                 }
-                Spacer()
+                .padding(.horizontal, 32)
+                .navigationDestination(isPresented: $navigateToStartingPage) {
+                    StartingPageView()
+                }
+                .navigationDestination(isPresented: $navigateToLanguageSelection) {
+                    LanguageSelectionView()
+                }
             }
-            .padding(.horizontal, 32)
         }
     }
 
