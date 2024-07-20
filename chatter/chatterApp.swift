@@ -2,7 +2,7 @@
 //  chatterApp.swift
 //  chatter
 //
-//  Created by Moritz on 21.07.24.
+//  Created by moritz.zewinger on 07.05.24.
 //
 
 import SwiftUI

@@ -2,23 +2,27 @@
 //  ContentView.swift
 //  chatter
 //
-//  Created by Moritz on 21.07.24.
+//  Created by moritz.zewinger on 07.05.24.
 //
 
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            //StartScreenView()
+            //LanguageSelectionView()
+            StartingPageView()
+            //LoginPageView()
+            //AccountView()
+            //SettingsView()
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
+
